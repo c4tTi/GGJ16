@@ -246,19 +246,7 @@ public class IngameMenuScript : MonoBehaviour {
         }
     }
 
-    private void WeaponUnavailable(Weapon weapon)
-    {
-        weapon.image.color = new Color(1f, 1f, 1f, 0.2f);
-        weapon.available = false;
-    }
-
-    private void WeaponAvailable(Weapon weapon)
-    {
-        weapon.image.color = new Color(1f, 1f, 1f, 1f);
-        weapon.available = true;
-    }
-
-    private Weapon getActiveWeapon()
+    public Weapon getActiveWeapon()
     {
         foreach (Weapon weapon in weapons)
         {
@@ -269,6 +257,18 @@ public class IngameMenuScript : MonoBehaviour {
         }
 
         return null;
+    }
+
+    private void WeaponUnavailable(Weapon weapon)
+    {
+        weapon.image.color = new Color(1f, 1f, 1f, 0.2f);
+        weapon.available = false;
+    }
+
+    private void WeaponAvailable(Weapon weapon)
+    {
+        weapon.image.color = new Color(1f, 1f, 1f, 1f);
+        weapon.available = true;
     }
 
     private void InitWeapons()
