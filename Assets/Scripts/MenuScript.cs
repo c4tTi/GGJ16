@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Threading;
 using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
@@ -20,6 +21,14 @@ public class MenuScript : MonoBehaviour
     public Canvas quitMenu;
     public Button quitMenuYesButton;
     public Button quitMenuNoButton;
+
+    public Canvas startScreen;
+    public Canvas startScreen2;
+
+    private int screen1 = 0;
+    private bool isScreen1 = false;
+    private int screen2 = 0;
+    private bool isScreen2 = false;
 
     // Use this for initialization
     void Start()
@@ -43,12 +52,44 @@ public class MenuScript : MonoBehaviour
         quitMenu.enabled = false;
         creditMenu.enabled = false;
         controllsMenu.enabled = false;
+        startScreen.enabled = false;
+        startScreen2.enabled = false;
+    }
+
+    public void FixedUpdate()
+    {
+        if (isScreen1)
+        {
+            screen1++;
+
+            if (screen1 >= 60*1)
+            {
+                screen2 = 0;
+                isScreen1 = false;
+                isScreen2 = true;
+                startScreen.enabled = false;
+                startScreen2.enabled = true;
+            }
+        }
+
+        else if (isScreen2)
+        {
+            screen2++;
+
+            if (screen2 >= 60 * 1)
+            {
+                SceneManager.LoadScene("level1");
+            }
+        }
     }
 
     public void MenuStartButtonPress()
     {
-        // ToDo
-        SceneManager.LoadScene("level1");
+        mainMenu.enabled = false;
+        startScreen.enabled = true;
+
+        isScreen1 = true;
+        screen1 = 0;
     }
 
     public void MenuCreditsButtonPress()
