@@ -11,10 +11,14 @@ public class PlayerBehaviourScript : MonoBehaviour
     public Transform groundCheck;
     public LayerMask whatIsGround;
 
+    public Canvas gameOver;
+
     private bool isPosing = false;
     private bool facingRight = true;
     private bool grounded = true;
     private float groundRadius = 0.3f;
+    private bool isGameOver = false;
+    private int gameOverCount = 0;
 
 
     private Rigidbody rigidBody;
@@ -32,16 +36,24 @@ public class PlayerBehaviourScript : MonoBehaviour
 
         menu.OnNoTime += MenuOnNoTime;
         menu.OnToDirty += MenuOnToDirty;
+
+        gameOver.enabled = false;
     }
 
     private void MenuOnToDirty()
     {
-        SceneManager.LoadScene("GameOver");
+        animator.SetTrigger("GameOver");
+        isGameOver = true;
+        gameOver.enabled = true;
+        rigidBody.velocity = new Vector3();
     }
 
     private void MenuOnNoTime()
     {
-        SceneManager.LoadScene("GameOver");
+        animator.SetTrigger("GameOver");
+        isGameOver = true;
+        gameOver.enabled = true;
+        rigidBody.velocity = new Vector3();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -55,6 +67,18 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     void FixedUpdate ()
 	{
+        if (isGameOver)
+        {
+            gameOverCount++;
+
+            if (gameOverCount >= 60 * 2)
+            {
+                SceneManager.LoadScene("RunningBrideStartMenu");
+            }
+
+            return;
+        }
+
 	    grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
         float move = Input.GetAxis("Horizontal");
 
