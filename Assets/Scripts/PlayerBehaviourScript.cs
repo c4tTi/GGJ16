@@ -13,11 +13,12 @@ public class PlayerBehaviourScript : MonoBehaviour
 
     private bool facingRight = true;
     private bool grounded = true;
-    private float groundRadius = 0.2f;
+    private float groundRadius = 0.3f;
 
 
     private Rigidbody rigidBody;
     private Animator animator;
+    private Collider[] colliders;
 
     public GameObject sprites;
 
@@ -26,6 +27,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         animator = sprites.GetComponent<Animator>();
+        colliders = GetComponents<Collider>();
 
         menu.OnNoTime += MenuOnNoTime;
         menu.OnToDirty += MenuOnToDirty;
@@ -78,6 +80,27 @@ public class PlayerBehaviourScript : MonoBehaviour
 	    {
 	        OnChangeWeapon();
 	    }
+
+        bool nearGrounded = rigidBody.velocity.y < 0.01 &&
+                            Physics.CheckSphere(groundCheck.position + groundRadius * Vector3.down, groundRadius,
+                                whatIsGround);
+
+        if (!grounded && !nearGrounded)
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = false;
+            }
+        }
+        else if (nearGrounded)
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = true;
+            }
+        }
+
+        rigidBody.rotation = Quaternion.identity;
     }
 
     private void Flip()
@@ -103,6 +126,27 @@ public class PlayerBehaviourScript : MonoBehaviour
     {
         // TODO
         animator.SetTrigger("Fire");
+        Weapon weapon = menu.getActiveWeapon();
+        GameObject weaponInstance = Instantiate(Resources.Load(weapon.text, typeof(GameObject))) as GameObject;
+        if (weapon.text == "Brautstrauss")
+        {
+            BrautstraussMovement script = weaponInstance.GetComponent<BrautstraussMovement>();
+            script.player = gameObject;
+            script.directionRight = facingRight;
+        }
+        else if (weapon.text == "Feuerwerk")
+        {
+            FeuerwerkMovement script = weaponInstance.GetComponent<FeuerwerkMovement>();
+            script.player = gameObject;
+            script.directionRight = facingRight;
+        }
+        else
+        {
+            StandardThrow script = weaponInstance.GetComponent<StandardThrow>();
+            script.player = gameObject;
+            script.directionRight = facingRight;
+        }
+
         menu.FireWeapon();
     }
 }
