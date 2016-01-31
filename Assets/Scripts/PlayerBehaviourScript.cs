@@ -66,6 +66,9 @@ public class PlayerBehaviourScript : MonoBehaviour
             return;
         }
 
+        if (rigidBody.position.y > 200) { 
+        menu.seconds = 300;
+        }
         rigidBody.velocity = new Vector3(move * horizontalSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
 
 	    if ((move > 0 && !facingRight)
