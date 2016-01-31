@@ -45,7 +45,7 @@ public class FeuerwerkMovement : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }

@@ -50,10 +50,5 @@ public class StandardThrow : MonoBehaviour
 
             Destroy(gameObject);
         }
-
-        if (collision.gameObject.tag == "Untagged")
-        {
-            Destroy(gameObject);
-        }
     }
 }
