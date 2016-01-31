@@ -8,7 +8,7 @@ public class TaubeBehaviourScript : MonoBehaviour
     public int patrolTurnRate = 100;
     public float patrolSpeed = 4;
 
-    private int count = 0;
+    public int count = 0;
     private Rigidbody rb;
 
 
