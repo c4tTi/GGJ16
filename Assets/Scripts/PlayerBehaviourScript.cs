@@ -66,7 +66,7 @@ public class PlayerBehaviourScript : MonoBehaviour
             return;
         }
 
-        if (rigidBody.position.y > 200) { 
+        if (rigidBody.position.y > 4800) { 
         menu.seconds = 300;
         }
         rigidBody.velocity = new Vector3(move * horizontalSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
