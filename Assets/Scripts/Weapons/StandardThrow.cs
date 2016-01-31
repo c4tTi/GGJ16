@@ -11,7 +11,6 @@ public class StandardThrow : MonoBehaviour
     private Rigidbody rigidBody;
     private SpriteRenderer spriteRenderer;
 
-    // Use this for initialization
     void Start()
     {
         if (directionRight)
@@ -40,6 +39,19 @@ public class StandardThrow : MonoBehaviour
         }
 
         if (collision.gameObject.tag == "Ground")
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerBehaviourScript player = collision.gameObject.GetComponent<PlayerBehaviourScript>();
+            player.menu.AddDirt(30);
+
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Untagged")
         {
             Destroy(gameObject);
         }
