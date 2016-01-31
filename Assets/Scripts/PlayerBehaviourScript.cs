@@ -11,6 +11,7 @@ public class PlayerBehaviourScript : MonoBehaviour
     public Transform groundCheck;
     public LayerMask whatIsGround;
 
+    private bool isPosing = false;
     private bool facingRight = true;
     private bool grounded = true;
     private float groundRadius = 0.3f;
@@ -59,6 +60,11 @@ public class PlayerBehaviourScript : MonoBehaviour
 
         animator.SetBool("Grounded", grounded);
         animator.SetFloat("Speed", Mathf.Abs(move));
+
+        if (isPosing)
+        {
+            return;
+        }
 
         rigidBody.velocity = new Vector3(move * horizontalSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
 
@@ -148,5 +154,18 @@ public class PlayerBehaviourScript : MonoBehaviour
         }
 
         menu.FireWeapon();
+    }
+
+    public void StartPosing()
+    {
+        rigidBody.velocity = new Vector3();
+        isPosing = true;
+        animator.SetBool("Posing", isPosing);
+    }
+
+    public void EndPosing()
+    {
+        isPosing = false;
+        animator.SetBool("Posing", isPosing);
     }
 }

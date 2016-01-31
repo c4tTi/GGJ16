@@ -23,6 +23,7 @@ public class TriggerObjectCreation : MonoBehaviour {
     {
         if (lastSpawn > 20 && other.tag.Equals("Player"))
         {
+            lastSpawn = 0;
             GameObject pizzaKurrier = (GameObject)Instantiate(prefab, triggerBox.transform.position + new Vector3(distance, 0, 0), Quaternion.identity);
         }
     }

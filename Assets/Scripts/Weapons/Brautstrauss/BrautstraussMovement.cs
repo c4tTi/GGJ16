@@ -15,12 +15,12 @@ public class BrautstraussMovement : MonoBehaviour
     {
         if (directionRight)
         {
-            direction = new Vector3(1.0f, 1.0f, 0.0f);
-            offset = new Vector3(1.0f, 1.0f, 0.0f);
+            direction = new Vector3(-1.0f, 1.0f, 0.0f);
+            offset = new Vector3(1.0f, 2.0f, 0.0f);
         } else
         {
-            direction = new Vector3(-1.0f, 1.0f, 0.0f);
-            offset = new Vector3(-2.0f, 1.0f, 0.0f);
+            direction = new Vector3(1.0f, 1.0f, 0.0f);
+            offset = new Vector3(-2.0f, 2.0f, 0.0f);
         }
 
         gameObject.transform.position = player.gameObject.transform.position + offset;
